@@ -8,13 +8,10 @@ const router = Router()
 //res.redirect('/'); перенаправление на другую страницу  По умолчанию код редиректа будет 302 (найдено) res.redirect(301, '/');
 //res.type('text/plain'); type можно сменить тип ответа
 router.get('/', function (req, res) {
-    res.type('text/plain');
-    res.send('hello world 2 работают пути ');//возращаем ответ
-    //res.status(403).send('hello world');
-    console.log(req.path)
-    console.log(req.url)
-    console.log(req.query)
-    console.log(res.type)
+    res.render('index', {
+        title: 'Todos list',
+        isIndex: true
+    })
 });
 router.get('/page/sfdsdf/', function (req, res) {
     res.redirect(301, '/');

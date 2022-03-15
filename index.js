@@ -1,14 +1,23 @@
-const express = require('express')
-const Routes = require('./routes/routes')
+const express = require('express'),
+ Routes = require('./routes/routes'),
+ exphbs = require('express-handlebars'),
+ path = require("path");
 
 let app = express();
-app.use(Routes)
-app.get('/p/:tagId', function(req, res) {
-    res.send("tagId is set to " + req.params.tagId);
-});
-app.get('/about', function (req, res) {
-    res.send('About this wiki');
+
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    extname: 'hbs'
 })
+
+app.engine('hbs', hbs.engine)
+app.set('view engine', 'hbs')
+app.set('views', 'views')
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(Routes)
 app.use(function (req, res) {
     res.status(404).send('not found');
 });
